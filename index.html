@@ -44,6 +44,7 @@
 
         .main-wrapper {
             display: flex;
+            flex-direction: row;
             max-width: 1200px;
             width: 100%;
             background: var(--card-bg);
@@ -54,6 +55,19 @@
             border: 1px solid rgba(255, 255, 255, 0.18);
             overflow: hidden;
             animation: fadeIn 1s ease-out;
+        }
+
+        /* تعديل التصميم للشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .main-wrapper {
+                flex-direction: column;
+            }
+            .sidebar {
+                padding: 40px 20px;
+            }
+            .main-content {
+                padding: 30px;
+            }
         }
 
         @keyframes fadeIn {
@@ -137,6 +151,7 @@
             padding: 60px;
             display: flex;
             flex-direction: column;
+            width: 100%;
         }
 
         .card {
@@ -251,6 +266,9 @@
             color: var(--text-dark);
             font-size: 1.05rem;
             border: 1px solid #eee;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 100%;
         }
 
         .loading-container {
