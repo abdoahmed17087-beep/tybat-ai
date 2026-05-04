@@ -341,9 +341,9 @@
     </div>
 
     <script>
-        // المتغيرات
-        const GROQ_API_KEY = "apioad";
-        
+        // مفتاح الـ API الخاص بك موضوع محلياً أو يتم تشغيله بأمان
+        const GROQ_API_KEY = "groks";
+
         function initFastingCheck() {
             try {
                 let hijriStr = "تاريخ اليوم: " + new Date().toLocaleDateString('ar-EG');
@@ -435,7 +435,7 @@
                 }
             } catch (error) {
                 console.error('خطأ في جلب الاقتراحات:', error);
-                resultElement.innerHTML = "عذراً، حدث خطأ أثناء الاتصال بالخادم. يرجى التأكد من تشغيل الموقع عبر خادم محلي (Local Server).";
+                resultElement.innerHTML = "عذراً، حدث خطأ أثناء الاتصال بالخادم. يرجى التأكد من الاتصال بالإنترنت.";
                 loadingElement.style.display = "none";
                 resultContainer.style.display = "block";
             }
@@ -485,7 +485,7 @@
                 }
             } catch (error) {
                 console.error('خطأ في الاتصال:', error);
-                outputElement.innerHTML = "عذراً، حدث خطأ أثناء الاتصال بالسيرفر. يرجى التأكد من الاتصال بالإنترنت.";
+                outputElement.innerHTML = "عذراً، حدث خطأ أثناء الاتصال. يرجى التأكد من تشغيل الموقع والاتصال بالإنترنت.";
                 loadingElement.style.display = "none";
                 resultContainer.style.display = "block";
             }
@@ -493,7 +493,11 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             initFastingCheck();
+            initFastingCheck2();
         });
+
+        function initFCheck() {}
+        function initFCheck2() {}
     </script>
 </body>
 </html>
