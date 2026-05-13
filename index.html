@@ -9,126 +9,156 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <style>
-    :root {
-        --primary-green: #256d3b;
-        --accent-green: #4caf50;
-        --desert-sand: #fdf6e3;
-        --text-dark: #1a1a1a;
-        --white: #ffffff;
-    }
+<style>
+        :root {
+            --primary-green: #256d3b;
+            --accent-green: #4caf50;
+            --desert-sand: #fdf6e3;
+            --text-dark: #1a1a1a;
+            --white: #ffffff;
+        }
 
-    * { 
-        box-sizing: border-box; 
-        margin: 0; 
-        padding: 0; 
-    }
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
 
-    body {
-        background-color: var(--desert-sand);
-        font-family: 'Cairo', sans-serif;
-        color: var(--text-dark);
-        line-height: 1.6;
-        padding: 10px; /* تقليل الحواف الخارجية في الموبايل */
-    }
+        body {
+            background-color: var(--desert-sand);
+            font-family: 'Cairo', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 10px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
 
-    .main-wrapper {
-        display: flex;
-        flex-direction: column; /* جعل العناصر تحت بعضها بشكل افتراضي للموبايل */
-        max-width: 1100px;
-        width: 100%;
-        margin: 0 auto;
-        background: var(--white);
-        border-radius: 20px;
-        overflow: hidden;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
+        .main-wrapper {
+            display: flex;
+            flex-direction: column; /* الموبايل أولاً: عناصر تحت بعضها */
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
 
-    /* للشاشات الكبيرة (الكمبيوتر) نرجعه لشكل جانبي */
-    @media (min-width: 769px) {
-        .main-wrapper { flex-direction: row; }
-        body { padding: 20px; }
-    }
+        /* للشاشات الكبيرة (الكمبيوتر) نرجعه لشكل جانبي */
+        @media (min-width: 769px) {
+            .main-wrapper { flex-direction: row; align-items: stretch; }
+            body { padding: 40px 20px; align-items: center; }
+        }
 
-    .sidebar {
-        background: var(--primary-green);
-        color: var(--white);
-        padding: 30px 20px;
-        text-align: center;
-        flex: 1;
-    }
+        .sidebar {
+            background: var(--primary-green);
+            color: var(--white);
+            padding: 30px 20px;
+            text-align: center;
+            flex: 1;
+        }
 
-    .avatar-container {
-        width: 100px; height: 100px;
-        margin: 0 auto 15px;
-        border-radius: 50%;
-        border: 3px solid rgba(255,255,255,0.3);
-        overflow: hidden;
-    }
+        .avatar-container {
+            width: 100px; height: 100px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            border: 3px solid rgba(255,255,255,0.3);
+            overflow: hidden;
+        }
 
-    .avatar { width: 100%; height: 100%; object-fit: cover; }
+        .avatar { width: 100%; height: 100%; object-fit: cover; }
 
-    .main-content { 
-        flex: 2; 
-        padding: 20px; /* تقليل الحشو الداخلي للموبايل */
-    }
+        .main-content { 
+            flex: 2; 
+            padding: 20px;
+        }
 
-    /* للشاشات الكبيرة نزيد الحشو */
-    @media (min-width: 769px) {
-        .main-content { padding: 40px; }
-    }
+        @media (min-width: 769px) {
+            .main-content { padding: 40px; }
+        }
 
-    .card {
-        background: #f9f9f9;
-        border-radius: 12px;
-        padding: 20px;
-        margin-bottom: 20px;
-        border-right: 5px solid var(--accent-green);
-    }
+        .card {
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-right: 5px solid var(--accent-green);
+        }
 
-    .btn {
-        width: 100%;
-        padding: 15px;
-        background: var(--accent-green);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-weight: bold;
-        cursor: pointer;
-        font-size: 1rem;
-    }
+        h1 { font-size: 1.5rem; margin-bottom: 5px; }
+        h2 { font-size: 1.2rem; margin-bottom: 15px; color: var(--primary-green); }
 
-    input[type="text"] {
-        width: 100%;
-        padding: 12px;
-        margin-bottom: 15px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        font-family: 'Cairo';
-    }
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent-green);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
 
-    .result-box {
-        margin-top: 15px;
-        padding: 15px;
-        background: #fff;
-        border: 1px solid #eee;
-        border-radius: 8px;
-        word-wrap: break-word; /* لمنع خروج النص عن الشاشة */
-        display: none;
-    }
+        .btn:hover { background: var(--primary-green); }
 
-        @keyframes spin { to { transform: rotate(360deg); } }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Cairo';
+            font-size: 1rem;
+        }
+
+        .result-box {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            word-wrap: break-word;
+            display: none;
+            text-align: right;
+        }
+
+        /* إصلاح الأنيميشن والتحميل */
+        .loading-container {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            font-weight: bold;
+            color: var(--primary-green);
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--accent-green);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
     <div class="main-wrapper">
         <header class="sidebar">
             <div class="avatar-container">
-                <!-- تأكد من وجود ملف الصورة في المستودع بنفس الاسم -->
-                <img src="NzAweDQwMC5qcGc (1).png" alt="صورة الدكتور ضياء العوضي" class="avatar">
+                <img src="NzAweDQwMC5qcGc (1).png" alt="د. ضياء العوضي" class="avatar">
             </div>
             <h1>الطيبات AI</h1>
-            <p>المساعد الذكي لمنهج الدكتور ضياء العوضي</p>
+            <p>المساعد الذكي لمنهج د. ضياء العوضي</p>
         </header>
 
         <main class="main-content">
@@ -150,6 +180,7 @@
             </section>
         </main>
     </div>
+    
 
     <script>
        const systemPrompt = `أنت المساعد الرسمي لنظام الطيبات للدكتور ضياء العوضي، وتعتمد في إجاباتك على تصنيف المناطق اللونية:
