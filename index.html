@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<style>
+    <style>
         :root {
             --primary-green: #256d3b;
             --accent-green: #4caf50;
@@ -180,10 +180,9 @@
             </section>
         </main>
     </div>
-    
 
     <script>
-       const systemPrompt = `أنت المساعد الرسمي لنظام الطيبات للدكتور ضياء العوضي، وتعتمد في إجاباتك على تصنيف المناطق اللونية:
+          const systemPrompt = `أنت المساعد الرسمي لنظام الطيبات للدكتور ضياء العوضي، وتعتمد في إجاباتك على تصنيف المناطق اللونية:
 
         1. المسموحات (المناطق الخضراء والصفراء والبرتقالية):
         - الخضراء (أمان مطلق): الأرز، البطاطس، زيت الزيتون، الملح، الخل، التمر، العسل، عصير القصب الطبيعي.
@@ -200,6 +199,7 @@
         - عند طلب وجبات، قسمها (إفطار، غداء، عشاء) واذكر السبب العلمي (تقليل الجهد الهضمي وتجنب المواد الكبريتية والالتهابية).
         - أضف تنبيه لمراقبة الأعراض (الهضمية أو الجلدية) عند تناول أصناف المنطقة الصفراء/البرتقالية.`;
 
+
         async function askGroq(promptText, resultId, loadId) {
             const resultDiv = document.getElementById(resultId);
             const loadDiv = document.getElementById(loadId);
@@ -208,12 +208,9 @@
             loadDiv.style.display = "flex";
 
             try {
-                // نكلم السيرفر الخاص بنا في Vercel وليس Groq مباشرة
                 const response = await fetch('/api/chat', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         model: 'llama-3.1-8b-instant',
                         messages: [
@@ -225,15 +222,13 @@
                 });
 
                 const data = await response.json();
-                
                 if (data.choices && data.choices[0]) {
                     resultDiv.innerHTML = data.choices[0].message.content.replace(/\n/g, '<br>');
                 } else {
-                    resultDiv.innerHTML = "حدث خطأ في الرد من السيرفر.";
+                    resultDiv.innerHTML = "حدث خطأ في الرد.";
                 }
             } catch (error) {
-                resultDiv.innerHTML = "خطأ في الاتصال. تأكد من إعدادات Vercel والـ API Key.";
-                console.error(error);
+                resultDiv.innerHTML = "خطأ في الاتصال بالسيرفر.";
             } finally {
                 loadDiv.style.display = "none";
                 resultDiv.style.display = "block";
@@ -241,15 +236,13 @@
         }
 
         function askSpecificItem(item) {
-            if(!item) return alert("اكتب شيئاً أولاً");
-            askGroq(`هل الصنف "${item}" مسموح؟ اشرح السبب علمياً.`, "resultBox", "loading");
+            if(!item.trim()) return alert("اكتب شيئاً أولاً");
+            askGroq(`هل الصنف "${item}" مسموح؟ اشرح المنطقة والسبب.`, "resultBox", "loading");
         }
 
         function fetchRecommendations() {
             askGroq("اقترح جدول وجبات ليوم كامل مسموح في الطيبات.", "suggestResult", "suggestLoading");
         }
-
-        window.onload = () => { console.log("Site Ready"); };
     </script>
 </body>
 </html>
