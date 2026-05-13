@@ -1,36 +1,33 @@
-// api/chat.js
-export default async function handler(req, res) {
-    // 1. التأكد أن الطلب القادم للملف هو من نوع POST فقط
-    if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'الطريقة غير مسموح بها (Method Not Allowed)' });
-    }
+const fetch = require('node-fetch'); // تأكد من وجوده أو استخدم fetch المدمج في Node 18+
 
-    // 2. سحب الـ API Key من إعدادات Vercel بأمان (الاسم البرمجي هو grok)
-    const apiKey = process.env.grok; 
-
-    // التأكد من وجود المفتاح في الإعدادات لتجنب الأخطاء
-    if (!apiKey) {
-        return res.status(500).json({ error: 'مفتاح API غير موجود في إعدادات Vercel.' });
+exports.handler = async function(event, context) {
+    // Netlify تستقبل البيانات في event.body
+    if (event.httpMethod !== "POST") {
+        return { statusCode: 405, body: "Method Not Allowed" };
     }
 
     try {
-        // 3. إرسال الطلب من سيرفر Vercel إلى سيرفر Groq
+        const { messages, model, temperature } = JSON.parse(event.body);
+        
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${apiKey}`,
+                'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
                 'Content-Type': 'application/json'
             },
-            // نمرر البيانات القادمة من المتصفح كما هي لسيرفر Groq
-            body: JSON.stringify(req.body)
+            body: JSON.stringify({ messages, model, temperature })
         });
 
-        // 4. استقبال الرد من Groq وإرساله مرة أخرى للمتصفح
         const data = await response.json();
-        res.status(200).json(data);
-        
+
+        return {
+            statusCode: 200,
+            body: JSON.stringify(data)
+        };
     } catch (error) {
-        // في حالة حدوث أي مشكلة في الاتصال
-        res.status(500).json({ error: 'فشل الاتصال بسيرفر Groq' });
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ error: "Failed to fetch from Groq" })
+        };
     }
-}
+};
